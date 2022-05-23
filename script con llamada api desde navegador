@@ -1,0 +1,29 @@
+<script type="text/javascript">
+	function workToRextester()
+	{
+		var programa="atributo:- read(X), write('\"'), write(X), write('\":'),tipoatributo(X). tipoatributo(M):- read(X), (X='metodo'->metodo(M); b1(X)). b1(X):- X='numero'->numero; b2(X). b2(X):- X='cadena'->cadena;write('error'). cadena:- read(X), write('\"'), write(X), write('\",'). numero:-read(X), write(X). metodo(M):- write('\"function() {'),a2,write(' return '), write(M), write(';}\"'). a2:- read(X), (X='decision'->decision;a3(X)). a3(X):- X='asignacion' -> asignacion;(nl,nl,nl,write('ERROR AL INGRESAR: '),write(X),nl,nl,nl). asignacion:- read(X), write(X), write('='), read(Y), write(Y), write(';'). decision:- write('if('),condicion,write(')'), verdadero. condicion:-read(X), write(X). verdadero:- write('{'),a2,write('}'). falso:- write('{'),a2,write('}'). :- atributo.";
+		var inputs = document.getElementById("inputArea").value;
+		var to_compile = 
+		{
+	    	"LanguageChoice": "19", // 19 = prolog
+			"Program": programa, //Programa descrito arriba
+			"Input": inputs, //argumentos que recibirá la base del conocimiento (al momento de ejecucion).
+			"CompilerArgs" : "", //Argumentos para el compilador en orden de ejecucion, en este caso no se utilizará.
+			"ApiKey": "3a5bf905-e2e3-437b-a033-e70e869c1461"
+		 };
+		 $.ajax( 
+		 {
+			 url: "https://rextester.com/rundotnet/api", //URL de la web API
+			 type: "POST", //petición tipo POST (Only POST)
+			 data: to_compile //Objeto JSON POST armado anteriormente.
+		 }).done(function(data) //si funciono, el objeto "data"
+		 {
+			 document.getElementById("resultSet").value = (data.Result); //añadimos al textArea el JSON que se obtuvo ubicado en 
+			 //si se usa JSON.stringify(data.Result), podemos manipular el result en dado caso de que tenga funciones que pueda interpretar.
+		 }).fail(function(data, err) 
+		 {
+		 	alert("fail " + JSON.stringify(data) + " " + JSON.stringify(err)); //ya valio malles
+			document.getElementById("resultSet").value = "No jala we, revisa tus argumentos.";
+		 });
+	}
+</script>
