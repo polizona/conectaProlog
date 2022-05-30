@@ -1,0 +1,43 @@
+objeto :- write('{'),aux1, write('}').
+aux1 :- read(X),(X='atributo'->atributo;
+                 X='fin'->write('')).
+atributo :-read(X),write('\"'),write(X),write('\"'), write(':'),valorobjeto(X),aux2.
+
+valorobjeto(M):-read(Y),(Y='cadena'->cadena;
+                 Y='numero'->numero;
+                 Y='objeto'->objeto;
+                 Y='arreglo'->arreglo;
+                 Y='metodo'->metodo(M);
+                 Y='true'->verdadero;
+                 Y='false'->falso).
+ 
+
+aux2 :- read(X),(X='atributo'->write(','),atributo;
+                 X='fin'->write('')). 
+cadena :- read(X),write('\"'),write(X),write('\"').
+numero :- read(N),write(N).
+arreglo :- write('['),aux3,write(']').
+aux3 :- read(X),(X='valor'->valorarreglo,aux4;
+                 X='fin'->write('didid')).
+aux4 :- read(X),(X='valor'->write(','),valorarreglo,aux4;
+                 X='fin'->write('')). 
+valorarreglo :-read(Y),(Y='cadena'->cadena;
+                 Y='numero'->numero;
+                 Y='objeto'->objeto;
+                 Y='arreglo'->arreglo;
+                 Y='true'->verdadero;
+                 Y='false'->falso).
+verdadero :- write('true').
+falso :- write('false').
+metodo(M) :- write('"function() {'),instruccion, write('return '),write(M),write('}"').
+asignacion :- read(X),write(X),write('='),read(Y),write(Y),write(';').
+aux5 :- read(X),(X='sinosi'->write('else '),decision;
+                 X='sino'->write('else {'),instruccion,write('}');
+                 X='fin'->write('')).
+decision :- write('if ('),read(C),write(C),write(') {'),instruccion,write('}'),aux5.
+instruccion :- read(I),(I='asignacion'->asignacion,instruccion;
+                 I='decision' ->decision,instruccion;
+                 I='fin'->write('')).
+
+:- objeto.
+
