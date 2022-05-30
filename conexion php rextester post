@@ -1,4 +1,6 @@
-
+<?php
+include('../conecta/prolog.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,21 +12,28 @@
 </head>
 <body>
     <header class="bg-azul-deg">
-    <h1>Espejel Moran Sebastian - Conexion</h1>
+    <h1>Martinez Lopez Said - Conecta Prolog</h1>
     </header>
    
 
     <main class="contenedor separador">
     <div class="pagar">
-    <form method="POST" action="inteligencia.php">
+    <form method="POST" action="newProlog.php">
         <fieldset class="pago">
         <legend class="titulo titulo-lima">Argumentos</legend>
         <label for="programa" class="programa" id="programa">Escribe la base de conocimiento:</label>
         <textarea name="programa"cols="30" rows="10" class="programa" id="programa">atributo:- read(X), write('\"'), write(X), write('\":'),tipoatributo(X). tipoatributo(M):- read(X), (X='metodo'->metodo(M); b1(X)). b1(X):- X='numero'->numero; b2(X). b2(X):- X='cadena'->cadena;write('error'). cadena:- read(X), write('\"'), write(X), write('\",'). numero:-read(X), write(X). metodo(M):- write('\"function() {'),a2,write(' return '), write(M), write(';}\"'). a2:- read(X), (X='decision'->decision;a3(X)). a3(X):- X='asignacion' -> asignacion;(nl,nl,nl,write('ERROR AL INGRESAR: '),write(X),nl,nl,nl). asignacion:- read(X), write(X), write('='), read(Y), write(Y), write(';'). decision:- write('if('),condicion,write(')'), verdadero. condicion:-read(X), write(X). verdadero:- write('{'),a2,write('}'). falso:- write('{'),a2,write('}'). :- atributo.</textarea>
         <label for="inputArea">Escibir argumentos:</label>
-        <textarea name="inputArea" id="inputArea" cols="30" rows="10" class="inputArea">atributo. empresa. objeto.<br>atributo. nbempresa. cadena. 43.<br>atributo. balance. objeto.<br>atributo. activo. objeto.<br>atributo. infraestructura. numero. 0.<br>atributo. bancos. numero. 0.<br>atributo. insumoA. cadena. Math.random()*100.<br>atributo. insumoB. cadena. sumar_el_atributo_cantidad_de_los_embarques_del_almacenB.<br>atributo. enproceso. numero. 0.<br>atributo. mercancias. numero. 0.<br>atributo. clientes. numero. 0.<br>fin. atributo. pasivo. objeto.<br>fin. atributo. capital. objeto.<br>atributo. capitalsocial. numero. 0.<br>atributo. utilidades. numero. 0.<br>fin. fin. atributo. almacenA. objeto. <br>atributo. maxA. numero. 5000. <br>atributo. totalA. cadena. sumatoria_de_cantidad. <br>atributo. unitarioA. cadena. sumatoria_de_precio_entre_sumatoria_de_cantidad. <br>atributo. inventario. arreglo. <br>valor. objeto. atributo. embarque. objeto.<br>atributo. cantidad. numero. 209.<br>atributo. precio. numero. 2159.52.<br>fin. fin. valor. objeto. atributo. embarque. objeto.<br>atributo. cantidad. numero. 263.<br>atributo. precio. numero. 2070.24.<br>fin. fin. valor. objeto. atributo. embarque. objeto.<br>atributo. cantidad. numero. 236.<br>atributo. precio. numero. 2069.19.<br>fin. fin. fin. fin. <br>atributo. almacenB. objeto. <br>atributo. maxB. numero. 5000. <br>atributo. totalB. cadena. sumatoria_de_cantidad. <br>atributo. unitarioB. cadena. sumatoria_de_precio_entre_sumatoria_de_cantidad. <br>atributo. inventario. arreglo. <br>valor. objeto. atributo. embarque. objeto.<br>atributo. cantidad. numero. 117.<br>atributo. precio. numero. 2175.66.<br>fin. fin. valor. objeto. atributo. embarque. objeto.<br>atributo. cantidad. numero. 172.<br>atributo. precio. numero. 2227.33.<br>fin. fin. fin. fin. fin. fin. </textarea>
+        <textarea name="inputArea" id="inputArea" cols="30" rows="10" class="inputArea">a1. metodo. decision. a=b. decision. a=c. asignacion. a. menor.</textarea>
         <label for="resultSet">Resultado:</label>
-        <textarea  cols="1000" id="resultSet" name="resultSet"  readonly> {"empresa":{"nbempresa":"43","balance":{"activo":{"infraestructura":0,"bancos":0,"insumoA":"_3388.random()*100","insumoB":"sumar_el_atributo_cantidad_de_los_embarques_del_almacenB","enproceso":0,"mercancias":0,"clientes":0},"pasivo":{},"capital":{"capitalsocial":0,"utilidades":0}},"almacenA":{"maxA":5000,"totalA":"sumatoria_de_cantidad","unitarioA":"sumatoria_de_precio_entre_sumatoria_de_cantidad","inventario":[{"embarque":{"cantidad":209,"precio":2159.52}},{"embarque":{"cantidad":263,"precio":2070.24}},{"embarque":{"cantidad":236,"precio":2069.19}}]},"almacenB":{"maxB":5000,"totalB":"sumatoria_de_cantidad","unitarioB":"sumatoria_de_precio_entre_sumatoria_de_cantidad","inventario":[{"embarque":{"cantidad":117,"precio":2175.66}},{"embarque":{"cantidad":172,"precio":2227.33}}]}}}</textarea>
+        <textarea  cols="1000" id="resultSet" name="resultSet"  readonly> <?php 
+        if(isset($inputs)){
+            echo $response->Result;
+        }
+        ?></textarea>
         <input class='bt bt-azul' type="submit" value="Enviar">
      
         </fieldset>
+    </form>
+    </div>
+</main>
