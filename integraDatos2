@@ -1,0 +1,101 @@
+<?PHP
+	$hostname_localhost ="68.70.164.26";
+	$database_localhost ="polizona_uno";
+	$username_localhost ="polizona_profe";
+	$password_localhost ="Poli-profe3";
+
+	$conexion = mysqli_connect($hostname_localhost,$username_localhost,$password_localhost,$database_localhost);
+	$industria="1";
+	$consultaBalance="select empresa, mercado, industria, infraestructura, bancos, enproceso, mercancias, clientes, hipotecas, proveedores, capitalsocial, utilidades from balances where empresa in (select empresa from balances where industria='$industria');";
+	$consultaInsA="select cantidad, precio from embarque where idempresa='$empresa' and idalmacen=1;";
+	$consultaInsB="select cantidad, precio from embarque where idempresa='$empresa' and idalmacen=2;";
+		$resultado=mysqli_query($conexion,$consultaBalance);
+		$almacenA=mysqli_query($conexion,$consultaInsA);
+		$almacenB=mysqli_query($conexion,$consultaInsB);
+		if($conexion){
+		    //inicia el objeto empresa y escribe el balance
+			while($registro=mysqli_fetch_array($resultado)){
+				$result["empresa"]=$registro['empresa'];
+				$result["mercado"]=$registro['mercado'];
+				$result["industria"]=$registro['industria'];
+				$result["infraestructura"]=$registro['infraestructura'];
+				$result["bancos"]=$registro['bancos'];
+				$result["enproceso"]=$registro['enproceso'];
+				$result["mercancias"]=$registro['mercancias'];
+				$result["clientes"]=$registro['clientes'];
+				$result["hipotecas"]=$registro['hipotecas'];
+				$result["proveedores"]=$registro['proveedores'];
+				$result["capitalsocial"]=$registro['capitalsocial'];
+				$result["utilidades"]=$registro['utilidades'];
+				    echo "atributo. industria. objeto. ";
+					echo "atributo. nbindustria. cadena. a. ";
+					echo "atributo. funcion. arreglo. valor. objeto. atributo. nbinsumo. cadena. consultar_vista_coeficientes. ";
+					echo "atributo. coeficiente. cadena. consultar_vista_coeficientes. fin. fin. ";
+					echo "atributo. competidores. arreglo. valor. objeto. ";
+				    echo "atributo. empresa. objeto. ";
+				    echo "atributo. nbempresa. cadena. ".$registro['empresa'].". ";					
+                    echo "atributo. balance. objeto. ";
+                    echo "atributo. activo. objeto. ";
+                    echo "atributo. infraestructura. numero. ".$registro['infraestructura'].". ";
+					echo "atributo. bancos. numero. ".$registro['bancos'].". ";
+					echo "atributo. insumoA. cadena. sumar_el_atributo_precio_de_los_embarques_del_almacenA. ";
+					echo "atributo. insumoB. cadena. sumar_el_atributo_precio_de_los_embarques_del_almacenB. ";
+					echo "atributo. enproceso. numero. ".$registro['enproceso'].". ";
+					echo "atributo. mercancias. numero. ".$registro['mercancias'].". ";					
+					echo "atributo. clientes. numero. ".$registro['clientes'].". ";
+					echo "fin. ";
+                    echo "atributo. pasivo. objeto. ";
+                    echo "atributo. hipotecas. numero. ".$registro['hipotecas'].". ";
+                    echo "atributo. proveedores. numero. ".$registro['proveedores'].". " ;
+                    echo "fin. ";
+                    echo "atributo. capital. objeto. ";
+                    echo "atributo. capitalsocial. numero. ".$registro['capitalsocial'].". ";
+                    echo "atributo. utilidades. numero. ".$registro['utilidades'].". ";
+                    echo "fin. ";
+                    echo "fin. ";
+			} 
+			//crea el objeto almacen A
+			echo "atributo. almacenA. objeto. ";
+			echo "atributo. maxA. numero. 5000. ";
+			echo "atributo. totalA. cadena. sumatoria_de_cantidad_en_inventario. ";
+			echo "atributo. unitarioA. cadena. traer_el_campo_CUponderado_de_la_vista_cualmacenes. ";
+			echo "atributo. inventario. arreglo. ";
+            // llena el arreglo de inventarioA con objetos embarque
+			while($registro2=mysqli_fetch_array($almacenA)){
+				$result2["cantidad"]=$registro2['cantidad'];
+				$result2["precio"]=$registro2['precio'];
+				    echo "valor. objeto. atributo. embarque. objeto. ";
+				    echo "atributo. cantidad. numero. ".$registro2['cantidad'].". ";
+				    echo "atributo. precio. numero. ".$registro2['precio'].". ";
+					echo "fin. fin. ";
+			} echo "fin. fin. ";
+
+			//crea el objeto almacen B
+			echo "atributo. almacenB. objeto. ";
+			echo "atributo. maxB. numero. 5000. ";
+			echo "atributo. totalB. cadena. sumatoria_de_cantidad_en_inventario. ";
+			echo "atributo. unitarioB. cadena. traer_el_campo_CUponderado_de_la_vista_cualmacenes. ";
+			echo "atributo. inventario. arreglo. ";
+            // llena el arreglo de inventarioB con objetos embarque
+			while($registro3=mysqli_fetch_array($almacenB)){
+				$result3["cantidad"]=$registro3['cantidad'];
+				$result3["precio"]=$registro3['precio'];
+				    echo "valor. objeto. atributo. embarque. objeto. ";
+				    echo "atributo. cantidad. numero. ".$registro3['cantidad'].". ";
+				    echo "atributo. precio. numero. ".$registro3['precio'].". ";
+					echo "fin. fin. ";
+			}
+			echo "fin. fin. "; 			
+			echo "atributo. metadatos. objeto. "; 			
+			echo "atributo. costototal. metodo. asignacion. costototal. (unitarioA*coeficienteA)+(unitarioB*coeficienteB). fin. ";
+			echo "atributo. precio. metodo. asignacion. precio. costototal*(1+tasa). fin. "; //buscar la tasa en la bd
+			echo "fin. fin. fin. fin. fin. fin. ";
+
+			mysqli_close($conexion);
+		}
+		else{
+			echo "no hay conexión con el servidor bd.polizona.com";
+		}
+		
+			
+	?>
